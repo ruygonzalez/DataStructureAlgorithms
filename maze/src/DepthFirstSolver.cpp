@@ -69,7 +69,7 @@ void DepthFirstSolver::init()
  */
 DepthFirstSolver::~DepthFirstSolver()
 {
-	delete stack;
+    delete stack;
     deinit();
 }
 

@@ -87,7 +87,7 @@ CoordinateStack::~CoordinateStack()
  */
 void CoordinateStack::deinit()
 {
-    /* TODO: Writ your cleanup code here! */
+    /* TODO: Write your cleanup code here! */
 }
 
 /**
