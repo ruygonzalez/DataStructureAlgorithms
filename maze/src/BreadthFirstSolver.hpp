@@ -78,8 +78,8 @@ private:
     class CoordinateQueue *queue;
     vitem visited[WIDTH][HEIGHT];
 
-	void init();
-	void deinit();
+    void init();
+    void deinit();
 };
 
 #endif
