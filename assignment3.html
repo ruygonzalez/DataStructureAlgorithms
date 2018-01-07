@@ -143,7 +143,7 @@
 
 <div class="author">Author: Ellen Price</div>
 <h1>CS2 Assignment 3: Data Structures</h1>
-<h2>Due Tuesday, January 24, 2017, at 17:00 PST</h2>
+<h2>Due Tuesday, January 23, 2016, at 17:00 PST</h2>
 
 <hr />
 
@@ -271,6 +271,82 @@ include binaries or object files. To quickly remove binaries and object
 files, run <span class="code">make clean</span> using the supplied
 Makefile target. As always, be sure that the code you submit compiles!</div>
 
+<h3>Part -1: Warm up</h3>
+<p><div class="points easy">1</div>
+  Every set we will have a warmup question to get your fingers warmed up.
+  You may code up a solution in any language (within reason). Please
+  include directions for running your program and an explanation of time and
+  space complexity for your algorithm. Please put your files in the warmup
+  folder.</p>
+<p>Warm Up:
+You will be creating a simple minesweeper game the week. You are given
+a 2D string matrix representing the game board and a 'click' position (a row and
+column indice). You will return the board after revealing the click position,
+keeping in mind of the following notes and rules.
+</p>
+<p>
+<b>'M'</b> represents an
+<b>unrevealed</b> mine, <b>'E'</b> represents an <b>unrevealed</b> empty square,
+<b>'B'</b> represents a <b>revealed</b> blank square that has no adjacent
+(above, below, left, right, and all 4 diagonals). <b>'Digits'</b> ('1' to '8')
+represents how many mines are adjacent to this <b>revealed</b> square, and
+<b>'X'</b> represents a <b>revealed</b> mine.
+</p>
+<p> The click position is guaranteed to be in the <b>unrevealed</b> squares.</p>
+<p>
+  The rules for revealing squares are as followed:
+  <li>If a mine ('M') is revealed, change it to 'X' and return.</li>
+  <li>If an empty square ('E') with <b>no adjacent mines</b> is revealed,
+    then change it to revealed blank ('B') and all of its adjacent
+    <b>unrevealed</b> squares should be revealed <b>recursively</b>. </li>
+  <li> If an empty square ('E') with <b>at least one adjacent mine</b> is
+    revealed, then change it to a digit ('1' to '8') representing the number of
+    adjacent mines.</li>
+  <li>
+    Return the board when no more squares will be revealed.
+  </li>
+</p>
+<p><b>Example 1:</b></p>
+<pre>
+<b>Input:</b>
+
+[['E', 'E', 'E', 'E', 'E'],
+ ['E', 'E', 'M', 'E', 'E'],
+ ['E', 'E', 'E', 'E', 'E'],
+ ['E', 'E', 'E', 'E', 'E']]
+[3,0]
+
+<b>Output:</b>
+
+[['B', '1', 'E', '1', 'B'],
+ ['B', '1', 'M', '1', 'B'],
+ ['B', '1', '1', '1', 'B'],
+ ['B', 'B', 'B', 'B', 'B']]
+
+</pre>
+<p><b>Example 2:</b></p>
+<pre>
+<b>Input:</b>
+
+[['B', '1', 'E', '1', 'B'],
+ ['B', '1', 'M', '1', 'B'],
+ ['B', '1', '1', '1', 'B'],
+ ['B', 'B', 'B', 'B', 'B']]
+[1,2]
+
+<b>Output:</b>
+
+[['B', '1', 'E', '1', 'B'],
+ ['B', '1', 'X', '1', 'B'],
+ ['B', '1', '1', '1', 'B'],
+ ['B', 'B', 'B', 'B', 'B']]
+
+</pre>
+<p>
+  <b>Hint:</b> Either Depth-first_search and Breadth-first_search works. Our
+  reference implementation in python is less than 45 lines and does not use
+  stacks or queues.
+</p>
 <h3>Part 0: Debugging with binary search trees</h3>
 
 <p>This objective is to be completed inside the
