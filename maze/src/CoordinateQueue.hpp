@@ -48,6 +48,7 @@
 
 #include <cstdlib>
 #include "common.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -62,7 +63,10 @@ struct queueitem {
 #ifndef TESTSUITE
 #include "MazeSolverBase.hpp"
 #include "MazeSolverApp.hpp"
+#include <iostream>
 #endif
+
+using namespace std;
 
 /**
  * @brief Encapsulates a queue for Coordinate objects.

@@ -46,15 +46,54 @@
 #include <cstdio>
 #include "CoordinateStack.hpp"
 #include "CoordinateQueue.hpp"
+#include <iostream>
+using namespace std;
 
 int main()
 {
     Coordinate c;
+    Coordinate d;
+    Coordinate temp;
     CoordinateQueue *queue = new CoordinateQueue();
     CoordinateStack *stack = new CoordinateStack();
+    c.x = 5; 
+    c.y = 7;
+    d.x = 12;
+    d.y = 6;
+    stack->push(c);
+    temp = stack->peek();
+    cout << "Pushed coordinate (5,7)" << endl;
+    cout << "Pushed value: " << temp.x << " " << temp.y << endl;
+    stack->push(d);
+    temp = stack->peek();
+    cout << "Pushed coordinate (12,6)" << endl;
+    cout << "Pushed value: " << temp.x << " " << temp.y << endl;
+    temp = stack->pop();
+    cout << "Popped coordinate (12,6)" << endl;
+    cout << "Popped value: " << temp.x << " " << temp.y << endl;
+    temp = stack->pop();
+    cout << "Popped coordinate (5,7)" << endl;
+    cout << "Popped value: " << temp.x << " " << temp.y << endl;
+    cout << "Attempting to pop empty stack " << endl;
+    temp = stack->pop();
 
-    /* TODO: Test all the things! */
-
+    queue->enqueue(c);
+    temp = queue->peek();
+    cout << "Enqueued coordinate (5,7)" << endl;
+    cout << "Enqueued value: " << temp.x << " " << temp.y << endl;
+    queue->enqueue(d);
+    temp = queue->peek();
+    cout << "Enqueued coordinate (12,6)" << endl;
+    cout << "Value in front should still be (5,7) : " << temp.x << " " << temp.y << endl;
+    temp = queue->dequeue();
+    cout << "Dequeued coordinate (5,7)" << endl;
+    cout << "Dequeued value: " << temp.x << " " << temp.y << endl;
+    temp = queue->dequeue();
+    cout << "Dequeued coordinate (12,6)" << endl;
+    cout << "Dequeue value: " << temp.x << " " << temp.y << endl;
+    cout << "Attempting to dequeue empty queue " << endl;
+    temp = queue->dequeue();
+    
     delete queue;
     delete stack;
 

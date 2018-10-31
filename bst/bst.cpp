@@ -3,7 +3,16 @@
 
 #define TEST_SIZE 10
 #define TEST_SPACE 50
-
+/**
+ The BinarySearchTree Class initiliazes by default a nullptr as a node, which leads to 
+ segmentation faults when you try to use it, so I initiliazed it to a new Node instead
+ which prompted me to create a Node constructor with no default arguments that would 
+ initiliaze the left and right attributes to nullptr. 
+ I created destructors in the Node and BinarySearchTree class to delete nodes and roots
+ and clear memory space since they were initilized using 'new'. 
+ I also commented out a line in find() because it created a new Node when the method
+ was just intended to look for nodes, not create them. 
+ */
 using namespace std;
 
 struct Node
@@ -12,12 +21,21 @@ struct Node
     Node * left;
     Node * right;
     Node(int v)
-    {
+    { 
         value = v;
         left = nullptr;
         right = nullptr;
     }
-
+    Node()
+    {
+        left = nullptr;
+        right = nullptr;
+    }
+    // Destructor for Node:
+    ~Node(){
+        delete left;
+        delete right;
+    }
     /** @brief Inserts an integer into the subtree rooted at this node.
 
     Does not allow duplicate entries.
@@ -72,7 +90,7 @@ struct Node
         {
             if(left == nullptr)
             {
-                left = new Node(val);
+                //left = new Node(val); 
                 return false;
             }
             else
@@ -101,9 +119,13 @@ private:
 public:
     BinarySearchTree()
     {
-        root = nullptr;
+        root = new Node();
     }
-
+    
+    // Destructor for BinarySearchTree:
+    ~BinarySearchTree(){
+        delete root;
+    }
     /** @brief Inserts an integer into this tree.
 
     Does not allow duplicate entries.
@@ -131,14 +153,13 @@ int main(int argc, char ** argv)
 {
     BinarySearchTree b;
     srand(42);
-
     // first insert some test numbers
     cout << endl << endl
          << "adding " << TEST_SIZE << " numbers" << endl << endl;
     for(int i = 0; i < TEST_SIZE; i++)
     {
         int k = rand() % TEST_SPACE;
-        cout << "Inserting " << k << "... ";
+        cout << "Inserting " << k << "... " << endl;
         bool s = b.insert(k);
         if(s)
         {

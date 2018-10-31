@@ -71,7 +71,8 @@ CoordinateQueue::CoordinateQueue()
  */
 void CoordinateQueue::init()
 {
-   /* TODO: Write your initialization code here! */
+   front = nullptr;
+   rear = nullptr;
 }
 
 /**
@@ -87,7 +88,11 @@ CoordinateQueue::~CoordinateQueue()
  */
 void CoordinateQueue::deinit()
 {
-    /* TODO: Write your cleanup code here! */
+    while(front != nullptr){
+        queueitem * temp = front;
+        front = front->next;
+        delete temp;
+    }
 }
 
 /**
@@ -115,7 +120,21 @@ void CoordinateQueue::enqueue(Coordinate c)
  */
 void CoordinateQueue::do_enqueue(Coordinate c)
 {
-    /* TODO: Write your enqueue operation here! */
+    queueitem * q = new queueitem;
+    q->c = c;
+    q->next =  nullptr;
+    if(is_empty()){
+        front = q;
+    }
+    else if(rear == nullptr){
+        rear = q;
+        front->next = rear;
+    }
+    else{
+        queueitem * temp = rear;
+		rear = q;
+        temp->next = rear;
+    }
 }
 
 /**
@@ -136,10 +155,21 @@ Coordinate CoordinateQueue::dequeue()
  */
 Coordinate CoordinateQueue::do_dequeue()
 {
-    /* TODO: Write your dequeue operation here! */
-    return Coordinate();
+    Coordinate x;
+    if(is_empty()){
+        cout << "Queue is empty" << endl;
+        return Coordinate();
+    }
+    x = front->c;
+	if(front->next == rear){
+		front = front->next;
+		rear = nullptr;
+	}
+	else
+		front = front->next;
+    return x;
 }
-
+ 
 /**
  * @brief Returns the item at the front of the queue without
  * removing it.
@@ -148,7 +178,9 @@ Coordinate CoordinateQueue::do_dequeue()
  */
 Coordinate CoordinateQueue::peek()
 {
-    /* TODO: Write your peek code here! */
+    if(!is_empty()){
+        return front->c;
+    }
     return Coordinate();
 }
 
@@ -159,7 +191,6 @@ Coordinate CoordinateQueue::peek()
  */
 bool CoordinateQueue::is_empty()
 {
-    /* TODO: Is the queue empty??? */
-    return true;
+    return front == nullptr;
 }
 

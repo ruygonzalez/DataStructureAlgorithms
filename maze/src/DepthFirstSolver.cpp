@@ -61,7 +61,9 @@ DepthFirstSolver::DepthFirstSolver(class MazeSolverApp *app)
  */
 void DepthFirstSolver::init()
 {
-    /* TODO: Write your initialization code here! */
+    for(int i = 0; i < WIDTH; i++)
+        for(int j = 0; j < HEIGHT; j++)
+            visited[i][j] = false;
 }
 
 /**
@@ -79,7 +81,6 @@ DepthFirstSolver::~DepthFirstSolver()
  */
 void DepthFirstSolver::deinit()
 {
-    /* TODO: Write your cleanup code here! */
 }
 
 /**
@@ -87,15 +88,71 @@ void DepthFirstSolver::deinit()
  *
  * @param[in] maze MazeGrid object that stores the maze to be
  * solved.
+ *
+ * Some pseudocode to explain my algorithm:
+ * Push 1st coordinate
+ * while( current coordinates != end){
+ *     Use function to get all possible moves and add them to stack
+ *     Pop the last one, make those new coordinates
+ * }
  */
 void DepthFirstSolver::solve(MazeGrid *maze)
 {
-    /* TODO: Solve the maze.
-     *
-     * You are provided a `visited` member variable that you can use to
-     * track which cells you have already visited; you are responsible for
-     * maintaining it, filling it with useful information, and using it
-     * in a consistent way. */
+	Coordinate h = Coordinate();
+    h.x = MAZE_START_X;
+    h.y = MAZE_START_Y;
+    stack->push(h);
+	good.push_back(h);
+    visited[MAZE_START_X][MAZE_START_Y] = true;
+    while(!(stack->is_empty()) && ((stack->peek()).x != MAZE_END_X || (stack->peek()).y != MAZE_END_Y)){
+        Coordinate c = stack->pop();
+		good.push_back(c);
+        visited[c.x][c.y] = true;
+        Coordinate temp = Coordinate();
+        temp.x = c.x;
+        temp.y = c.y;
+        int res = maze->get_possible_moves(c.x, c.y);
+		if (res & E) {
+		/* We can move east from (1, 2) to (2, 2). */
+			temp.x += 1;
+			if(!visited[temp.x][temp.y]){
+				stack->push(temp);
+				good.push_back(temp);
+			}
+		}
+    	temp.x = c.x;
+    	temp.y = c.y;
+		if (res & S) {
+		/* We can move south from (1, 2) to (1, 3). */
+			temp.y += 1;
+ 			if(!visited[temp.x][temp.y]){
+		    	stack->push(temp);
+				good.push_back(temp);
+			}
+		}
+		temp.x = c.x;
+    	temp.y = c.y;
+		if (res & N) {
+		/* We can move north from (1, 2) to (1, 1). */
+			temp.y -= 1;
+			if(!visited[temp.x][temp.y]){
+		    	stack->push(temp);
+				good.push_back(temp);
+			}
+		}
+        temp.x = c.x;
+        temp.y = c.y;
+		if (res & W) {
+		/* We can move west from (1, 2) to (0, 2). */
+			temp.x -= 1;
+			if(!visited[temp.x][temp.y]){
+       			stack->push(temp);
+				good.push_back(temp);
+			}
+		}
+    }
+	Coordinate c = stack->pop(); 
+    visited[c.x][c.y] = true;
 }
 
 /**
@@ -105,11 +162,6 @@ void DepthFirstSolver::solve(MazeGrid *maze)
  */
 vector<Coordinate> DepthFirstSolver::get_path()
 {
-    vector<Coordinate> list;
-
-    /* TODO: Get the current path through the maze. For a DFS, this is quite
-     * easy: just get all the Coordinates on the stack. */
-
-    return list;
+	return good;
 }
 

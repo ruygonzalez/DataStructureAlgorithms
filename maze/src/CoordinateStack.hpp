@@ -49,6 +49,7 @@
 #include <cstdlib>
 #include <vector>
 #include "common.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -63,7 +64,9 @@ struct stackitem {
 #ifndef TESTSUITE
 #include "MazeSolverBase.hpp"
 #include "MazeSolverApp.hpp"
+#include <iostream>
 #endif
+using namespace std;
 
 /**
  * @brief Encapsulates a stack for Coordinate objects.

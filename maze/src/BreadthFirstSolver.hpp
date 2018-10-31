@@ -50,6 +50,7 @@
 #include <iostream>
 #include "MazeSolverBase.hpp"
 #include "CoordinateQueue.hpp"
+using namespace std;
 
 /**
  * @brief A struct for keeping up with both which cells we have visited
@@ -77,6 +78,7 @@ public:
 private:
     class CoordinateQueue *queue;
     vitem visited[WIDTH][HEIGHT];
+    Coordinate high;
 
     void init();
     void deinit();

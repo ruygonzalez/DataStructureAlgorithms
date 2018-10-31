@@ -61,7 +61,13 @@ BreadthFirstSolver::BreadthFirstSolver(class MazeSolverApp *app)
  */
 void BreadthFirstSolver::init()
 {
-    /* TODO: Write your initialization code here! */
+    for(int i = 0; i < WIDTH; i++)
+        for(int j = 0; j < HEIGHT; j++){
+            visited[i][j].visited = false;
+	        Coordinate c = Coordinate();
+	        visited[i][j].from = c;
+	}
+    high = Coordinate();
 }
 
 /**
@@ -78,7 +84,7 @@ BreadthFirstSolver::~BreadthFirstSolver()
  */
 void BreadthFirstSolver::deinit()
 {
-    /* TODO: Write your cleanup code here! */
+    // no new structures creates other than the queue deleted above
 }
 
 /**
@@ -89,7 +95,71 @@ void BreadthFirstSolver::deinit()
  */
 void BreadthFirstSolver::solve(MazeGrid *maze)
 {
-    /* TODO: Solve the maze.
+    Coordinate h = Coordinate();
+    h.x = MAZE_START_X;
+    h.y = MAZE_START_Y;
+    high = h;
+    queue->enqueue(h);
+    Coordinate c;
+    visited[MAZE_START_X][MAZE_START_Y].visited = true;
+    while(!queue->is_empty()){
+        if((queue->peek()).x == MAZE_END_X && (queue->peek()).y == MAZE_END_Y){
+            break;
+        }
+        c = queue->dequeue();
+        high = c;
+        Coordinate temp = Coordinate();
+        temp.x = c.x;
+        temp.y = c.y;
+        int res = maze->get_possible_moves(c.x, c.y);
+		if (res & E) {
+		/* We can move east from (1, 2) to (2, 2). */
+			temp.x += 1;
+			if(!(visited[temp.x][temp.y].visited)){
+				queue->enqueue(temp);
+                visited[temp.x][temp.y].visited = true;
+                visited[temp.x][temp.y].from = c;
+			}
+		}
+    	temp.x = c.x;
+    	temp.y = c.y;
+		if (res & S) {
+		/* We can move south from (1, 2) to (1, 3). */
+			temp.y += 1;
+ 			if(!(visited[temp.x][temp.y].visited)){
+		    	queue->enqueue(temp);
+                visited[temp.x][temp.y].visited = true;
+                visited[temp.x][temp.y].from = c;
+			}
+		}
+		temp.x = c.x;
+    	temp.y = c.y;
+		if (res & N) {
+		/* We can move north from (1, 2) to (1, 1). */
+			temp.y -= 1;
+			if(!(visited[temp.x][temp.y].visited)){
+		    	queue->enqueue(temp);
+                visited[temp.x][temp.y].visited = true;
+                visited[temp.x][temp.y].from = c;
+			}
+		}
+        temp.x = c.x;
+        temp.y = c.y;
+		if (res & W) {
+		/* We can move west from (1, 2) to (0, 2). */
+			temp.x -= 1;
+			if(!(visited[temp.x][temp.y].visited)){
+       			queue->enqueue(temp);
+                visited[temp.x][temp.y].visited = true;
+                visited[temp.x][temp.y].from = c;
+			}
+		}
+    }    
+    c = queue->dequeue(); 
+    high = c;
+    visited[c.x][c.y].visited = true;
+
+    /*
      *
      * You are provided a member variable `visited` that stores
      * (bool, Coordinate) pairs describing whether a square has already
@@ -106,12 +176,12 @@ void BreadthFirstSolver::solve(MazeGrid *maze)
 vector<Coordinate> BreadthFirstSolver::get_path()
 {
     vector<Coordinate> list;
-
-    /* TODO: Find the current path through the maze and return it as a vector.
-     * For a BFS, this is a little tricky -- the top element in the queue
-     * only tells you the last point in the path; you need to trace back up
-     * using the `visited` member array. */
-
+    Coordinate current = high;
+    list.push_back(current);
+    while(current.x != MAZE_START_X || current.y != MAZE_START_Y){
+        current = visited[current.x][current.y].from;
+        list.push_back(current);
+    }
     return list;
 }
 

@@ -48,9 +48,10 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "MazeSolverBase.hpp"
 #include "CoordinateStack.hpp"
-
+using namespace std;
 /**
  * @brief Encapsulates a depth-first maze solver.
  */
@@ -65,6 +66,7 @@ public:
 
 private:
     class CoordinateStack *stack;
+	vector<Coordinate> good;
     bool visited[WIDTH][HEIGHT];
 
     void init();
